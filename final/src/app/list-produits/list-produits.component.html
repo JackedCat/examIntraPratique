@@ -1,0 +1,24 @@
+<div class="card m-5 p-3 border border-2 {{item.sku===selection?'border-warning':''}}"  *ngFor="let item of produits"
+(click)="choisitUnProduit(item.sku)"
+>
+    
+    <img class="card-img-top" src="{{item.thumbnailImage}}" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{item.name}}</h5>
+      <p class="card-text text-end" *ngIf="item.regularPrice !== item.salePrice">
+        <span class="text-decoration-line-through">{{item.regularPrice | currency}}</span>
+        <span class="text-danger fw-bold"> {{item.salePrice | currency}}</span>
+    </p>
+    <p class="card-text text-end" *ngIf="item.regularPrice === item.salePrice">
+      <span class="fw-bold"> {{item.salePrice | currency}}</span>
+    </p>
+    <div class="row">
+      <a class="col-5 mx-auto fw-bold btn btn-success text-center"
+      (click)="retireProduit(item, $event)"
+      >Ajoute</a>
+      <a class="col-5 mx-auto fw-bold btn btn-danger text-center"
+      (click)="ajouteProduit(item, $event)"
+      >Retire</a>
+    </div>
+  </div>
+</div>

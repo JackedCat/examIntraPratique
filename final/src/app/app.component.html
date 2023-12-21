@@ -1,0 +1,26 @@
+<div class="container vh-100">
+  <div class="row overflow-auto">
+    <div class="col-12 col-md-6 border border-danger my-5">
+      <app-list-produits
+        [produits]="lesArticle"
+        (produitChoisit)="choixiProduit($event)"
+        (ajoute_event)="ajouteArticle($event)"
+        (retire_event)="retireArticle($event)"
+      ></app-list-produits>
+    </div>
+    <div class="col-md-6 ms-auto fixed-top mt-5">
+      <div class="border border-primary border-2 mb-5"
+      *ngIf="selection"
+      >
+        <app-detailles
+        [produit]="selection"
+        ></app-detailles>
+      </div>
+      <div class="border border-warning border-2 mb-5">
+        <app-panier
+        [panier]="articles_in_cart"
+        ></app-panier>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,189 @@
+swagger: "2.0"
+info:
+  title: Petit Panier CAL
+  description: API pour l'examen 2022 cours 420-345.
+  version: 1.0.0
+#host: cegep.fdtt.space
+host: localhost:8080
+basePath: /v1
+schemes:
+  - http
+paths:
+  /cartitem/{category}:
+    get:
+      summary: Retourne les articles disponible.
+      description: Produits en inventaire.
+      parameters:
+        - in: path
+          name: category
+          required: true
+          type: string
+          description: Type d'équipment support `portable` ou `moniteur`
+        - in: query
+          name: page
+          required: false
+          type: integer
+          description: Page à récupérer
+        - in: query
+          name: pageSize
+          required: false
+          type: integer
+          description: Nombre d'appareil à retourner pour la requête
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              currentPage:
+                type: integer
+                description: Numéro de la page
+              total:
+                type: integer
+                description: Nombre d'équipment dans l'inventaire
+              totalPages:
+                type: integer
+                description: Nombre de pages
+              pageSize:
+                type: integer
+                description: Nombre d'article par page
+              products:
+                type: array
+                items: 
+                  type: object
+                  properties: 
+                    sku:
+                      type: string
+                      description: Identificateur unique de l'article
+                    name: 
+                      type: string
+                    salePrice:  
+                      type: number
+                    regularPrice:  
+                      type: number
+                    thumbnailImage:  
+                      type: string
+                    shortDescription:  
+                      type: string
+                    highResImage:  
+                      type: string
+
+
+  /cartpurchase:
+    get:
+      summary: Recupere un tableau des achats fait sur le serveur.
+      description: Dans un Json.
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items: 
+              type: object
+              properties:
+                id:
+                  type: string
+                prenom:
+                  type: string
+                nom:
+                  type: string
+                telephone:
+                  type: string
+                code_postal:
+                  type: string
+                commande:
+                  type: array
+                  description: Tableau des articles
+                  items: 
+                    type: object
+                    properties: 
+                      sku:
+                        type: string
+                        description: Identificateur unique de l'article
+                      name: 
+                        type: string
+                      salePrice:  
+                        type: number
+                      regularPrice:  
+                        type: number
+                      thumbnailImage:  
+                        type: string
+                      shortDescription:  
+                        type: string
+                      highResImage:  
+                        type: string
+                courriel:
+                  type: string
+                adresse:
+                  type: string
+                date_transaction:
+                  type: object
+                  properties: 
+                    value:
+                      type: string
+                      description: Datetime format "YYYY-MM-DDTHH:MM:SS.dddZ"
+    post:
+      summary: Transmet une commande. Possede 50% de chance de retourner une erreur.
+      parameters:
+        - in: query
+          name: erreur
+          required: false
+          type: number
+          description: Ratio d'erreur 0.5 est 50% erreur, 1 est 100% erreur.
+        - in: body
+          name: achat
+          description: Ajoute un achat
+          schema:
+            type: object
+            properties:
+              prenom:
+                default: "John"
+                type: string
+              nom:
+                default: "Doe"
+                type: string
+              courriel:
+                default: "john.doe@acme.com"
+                type: string
+              telephone:
+                default: "514-555-5646"
+                type: string
+              commande:
+                type: array
+                description: Tableau des articles
+                items: 
+                  type: object
+                  properties: 
+                    sku:
+                      type: string
+                      description: Identificateur unique de l'article
+                    name: 
+                      type: string
+                    salePrice:  
+                      type: number
+                    regularPrice:  
+                      type: number
+                    thumbnailImage:  
+                      type: string
+                    shortDescription:  
+                      type: string
+                    highResImage:  
+                      type: string
+              adresse:
+                default: "Doe"
+                type: string
+              code_postal:
+                default: "Doe"
+                type: string
+      description: Dans un Json.
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+    
+                    
